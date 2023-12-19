@@ -1,7 +1,9 @@
 "use client";
 
-import { MessageSquare } from "lucide-react";
+import { ArrowRight, MessageSquare, Music, Image, Video, Code } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const tools = [
   {
@@ -10,10 +12,45 @@ const tools = [
     color: "text-green-500",
     bgColor: "text-green-500/10",
     href: "/conversation"
-  }
+  },
+
+  {
+    label: "Image Generation",
+    icon: Image,
+    color: "text-purple-500",
+    bgColor: "text-purple-500/10",
+    href: "/conversation"
+  },
+
+  {
+    label: "Video Generation",
+    icon: Video,
+    bgColor: "text-red-700/10",
+    color: "text-red-700",
+    href: "/conversation",
+},
+
+{
+    label: "Music Generation",
+    icon: Music,
+    bgColor: "text-yellow-500/10",
+    color: "text-yellow-500",
+    href: "/conversation"
+},
+
+{
+    label: "Code Generation",
+    icon: Code,
+    bgColor: "text-sky-500/10",
+    color: "text-sky-500",
+    href: "/conversation"
+}
+
+  
 ]
 
 export default function DashboardHomepage() {
+  const router = useRouter();
   return (
     <div>
       <div className = "mb-8 space-y-4">
@@ -26,10 +63,23 @@ export default function DashboardHomepage() {
         </div>
         <div className = "px-4 md: px-20 lg: px-32 space-y-4">
         {tools.map((tool) => (
-          <Card key = {tool.href}
-          className = "p-4 border-black/5"
+          <Card 
+          onClick = {() => router.push(tool.href)}
+          key = {tool.href}
+          className = "p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer"
           >
+            <div className = "flex items-center gap-x-4">
 
+              <div className = {cn("p-2 w-fit round-md, ", tool.bgColor)}>
+                <tool.icon className = {cn("w-8 h-8", tool.color)}/>
+              </div>
+
+              <div className = "font-semibold">
+                {tool.label}
+              </div>
+
+            </div>
+            <ArrowRight className = "w-5 h-5"/>
           </Card>
         ))}
         </div>
